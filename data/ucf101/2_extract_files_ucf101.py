@@ -1,61 +1,40 @@
-"""
-After moving all the files using the 1_ file, we run this one to extract
-the images from the videos and also create a data file we can use
-for training and testing later.
-ref: https://github.com/harvitronix/five-video-classification-methods
-"""
 import csv
 import glob
 import os
 import os.path
 from subprocess import call
+from concurrent.futures import ThreadPoolExecutor
 
-def extract_files():
-    """After we have all of our videos split between train and test, and
-    all nested within folders representing their classes, we need to
-    make a data file that we can reference when training our RNN(s).
-    This will let us keep track of image sequences and other parts
-    of the training process.
+def extract_images_from_video(video_path):
+    video_parts = get_video_parts(video_path)
+    train_or_test, classname, filename_no_ext, filename = video_parts
 
-    We'll first need to extract images from each of the videos. We'll
-    need to record the following data in the file:
+    if not check_already_extracted(video_parts):
+        src = train_or_test + '/' + classname + '/' + filename
+        dest = train_or_test + '/' + classname + '/' + filename_no_ext + '-%04d.jpg'
+        call(["ffmpeg", "-i", src, dest])
 
-    [train|test], class, filename, nb frames
+    nb_frames = get_nb_frames_for_video(video_parts)
+    return [train_or_test, classname, filename_no_ext, nb_frames]
 
-    Extracting can be done with ffmpeg:
-    `ffmpeg -i video.mpg image-%04d.jpg`
-    """
+def extract_files_with_threads():
     data_file = []
     folders = ['./train/', './test/']
 
-    for folder in folders:
-        class_folders = glob.glob(folder + '*')
+    with ThreadPoolExecutor(max_workers=32) as executor:
+        for folder in folders:
+            class_folders = glob.glob(folder + '*')
 
-        for vid_class in class_folders:
-            class_files = glob.glob(vid_class + '/*.avi')
+            for vid_class in class_folders:
+                class_files = glob.glob(vid_class + '/*.avi')
 
-            for video_path in class_files:
-                # Get the parts of the file.
-                video_parts = get_video_parts(video_path)
+                # video_parts_list = [get_video_parts(video) for video in class_files]
 
-                train_or_test, classname, filename_no_ext, filename = video_parts
+                results = list(executor.map(extract_images_from_video, class_files))
 
-                # Only extract if we haven't done it yet. Otherwise, just get
-                # the info.
-                if not check_already_extracted(video_parts):
-                    # Now extract it.
-                    src = train_or_test + '/' + classname + '/' + \
-                        filename
-                    dest = train_or_test + '/' + classname + '/' + \
-                        filename_no_ext + '-%04d.jpg'
-                    call(["ffmpeg", "-i", src, dest])
-
-                # Now get how many frames it is.
-                nb_frames = get_nb_frames_for_video(video_parts)
-
-                data_file.append([train_or_test, classname, filename_no_ext, nb_frames])
-
-                print("Generated %d frames for %s" % (nb_frames, filename_no_ext))
+                for result in results:
+                    data_file.append(result)
+                    print("Generated %d frames for %s" % (result[3], result[2]))
 
     with open('data_file.csv', 'w') as fout:
         writer = csv.writer(fout)
@@ -64,15 +43,12 @@ def extract_files():
     print("Extracted and wrote %d video files." % (len(data_file)))
 
 def get_nb_frames_for_video(video_parts):
-    """Given video parts of an (assumed) already extracted video, return
-    the number of frames that were extracted."""
     train_or_test, classname, filename_no_ext, _ = video_parts
     generated_files = glob.glob(train_or_test + '/' + classname + '/' +
                                 filename_no_ext + '*.jpg')
     return len(generated_files)
 
 def get_video_parts(video_path):
-    """Given a full path to a video, return its parts."""
     parts = video_path.split('/')
     filename = parts[3]
     filename_no_ext = filename.split('.')[0]
@@ -82,19 +58,9 @@ def get_video_parts(video_path):
     return train_or_test, classname, filename_no_ext, filename
 
 def check_already_extracted(video_parts):
-    """Check to see if we created the -0001 frame of this file."""
     train_or_test, classname, filename_no_ext, _ = video_parts
     return bool(os.path.exists(train_or_test + '/' + classname +
                                '/' + filename_no_ext + '-0001.jpg'))
 
-def main():
-    """
-    Extract images from videos and build a new file that we
-    can use as our data input file. It can have format:
-
-    [train|test], class, filename, nb frames
-    """
-    extract_files()
-
 if __name__ == '__main__':
-    main()
+    extract_files_with_threads()
