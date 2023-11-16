@@ -1,4 +1,4 @@
-tensorflow-gpu
+tensorflow
 pillow
 matplotlib
 seaborn
