@@ -86,12 +86,10 @@ python demo.py --category soccer
 
 ## Experimental Results
 ### Preview of generated thumbnails using proposed and baseline methods.
-![fig4](https://github.com/iamgmujtaba/FRC-GIF/assets/33286377/aa5a2fab-17f8-4040-8c2e-72ea4bf902a3)
+![fig4](https://github.com/iamgmujtaba/FRC-GIF/assets/33286377/43d513bd-169f-44a2-b618-7166505bba7d)
 
 ### Preview of generated GIFs using proposed and baseline methods.
-https://github.com/iamgmujtaba/FRC-GIF/assets/33286377/fe297938-35f9-4b34-abe9-95346c5052f5
-
-
+https://github.com/iamgmujtaba/FRC-GIF/assets/33286377/47d7b466-e8a6-4401-ba91-7c6f6e407ccc
 
 
 ## Citation
