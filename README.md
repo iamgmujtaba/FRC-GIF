@@ -41,7 +41,7 @@ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/' > $CONDA_PREFI
 ## Preparing the data
 1. Create train and test folders
 ```bash
-cd data && mkdir ucf101 && cd ucf101 && mkdir train && mkdir test
+cd data && cd ucf101 && mkdir train && mkdir test
 ```
 
 2. Download the dataset from UCF into the data folder:
