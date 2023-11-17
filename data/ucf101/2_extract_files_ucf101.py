@@ -28,7 +28,7 @@ def extract_files_with_threads():
             for vid_class in class_folders:
                 class_files = glob.glob(vid_class + '/*.avi')
 
-                # video_parts_list = [get_video_parts(video) for video in class_files]
+                video_parts_list = [get_video_parts(video) for video in class_files]
 
                 results = list(executor.map(extract_images_from_video, class_files))
 
