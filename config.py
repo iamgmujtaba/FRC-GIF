@@ -28,7 +28,7 @@ def parse_opts():
     parser.add_argument('--learning_rate', default=0.001, type=float, help='Initial learning rate (divided by 10 while training by lr-scheduler)')    
     
     #Misc
-    parser.add_argument('--device', default='1',type=str, help='GPU device string number 1 |1,2')
+    parser.add_argument('--device', default='0',type=str, help='GPU device string number 0|1,2')
     parser.add_argument('--server_ip', default='http://000.000.000.000/dataset/', type=str, help='Server IP address')
     parser.add_argument('--category', default='Soccer',type=str, help='Video genre | Soccer | Baseketball | Boxing | Baseball | Cricket | Tennis')
     
