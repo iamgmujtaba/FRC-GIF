@@ -15,13 +15,15 @@ def get_train_test_lists(version='01'):
 def move_files(file_groups):
     for group, videos in file_groups.items():
         for video in videos:
+            video = video.strip()
             classname, filename = video.split('/')
+    
             dest = f'{group}/{classname}/{filename}'
 
             if not os.path.exists(dest):
                 os.makedirs(os.path.dirname(dest), exist_ok=True)
-                print(f"Moving {video} to {dest}")
-                os.rename(video, dest)
+                print(f"Moving {filename} to {dest}")
+                os.rename(filename, dest)
             else:
                 print(f"{dest} already exists. Skipping.")
 
