@@ -1,4 +1,4 @@
-tensorflow
+tensorflow[and-cuda]
 pillow
 matplotlib
 seaborn
