@@ -1,6 +1,6 @@
 # FRC-GIF: Frame Ranking-based Personalized Artistic Media Generation Method for Resource Constrained Devices
 
-This repository contains the original implementation of the paper [FRC-GIF: Frame Ranking-based Personalized Artistic Media Generation Method for Resource Constrained Devices](https://ieeexplore.ieee.org/document/), published in the regular issue of IEEE Transactions on Big Data 2023.
+This repository contains the original implementation of the paper [FRC-GIF: Frame Ranking-based Personalized Artistic Media Generation Method for Resource Constrained Devices]([https://ieeexplore.ieee.org/document/](https://ieeexplore.ieee.org/document/10336393)), published in the regular issue of IEEE Transactions on Big Data 2023.
 
 ## Abstract
 Generating video highlights in the form of animated graphics interchange formats (GIFs) has significantly simplified the process of video browsing. Animated GIFs have paved the way for applications concerning streaming platforms and emerging technologies. Existing studies have led to large computational complexity without considering user personalization. This paper proposes lightweight method to attract users and increase views of videos through personalized artistic media, i.e., static thumbnails and animated GIF generation. The proposed method analyzes lightweight thumbnail containers (LTC) using the computational resources of the client device to recognize personalized events from feature-length sports videos. Next, the thumbnails are then ranked through the frame rank pooling method for their selection. Subsequently, the proposed method processes small video segments rather than considering the whole video for generating artistic media. This makes our approach more computationally efficient compared to existing methods that use the entire video data; thus, the proposed method complies with sustainable development goals. Furthermore, the proposed method retrieves and uses thumbnail containers and video segments, which reduces the required transmission bandwidth as well as the amount of locally stored data. Experiments reveal that the computational complexity of our method is 3.73 times lower than that of the state-of-the-art method.
@@ -89,14 +89,22 @@ python demo.py --category soccer
 ![fig4](https://github.com/iamgmujtaba/FRC-GIF/assets/33286377/43d513bd-169f-44a2-b618-7166505bba7d)
 
 ### Preview of generated GIFs using proposed and baseline methods.
-https://github.com/iamgmujtaba/FRC-GIF/assets/33286377/47d7b466-e8a6-4401-ba91-7c6f6e407ccc
+https://github.com/iamgmujtaba/FRC-GIF/assets/33286377/d085f7d3-02d8-4fd7-bc0b-177b6ae3645b
+
 
 
 ## Citation
 If you use this code for your research, please cite our paper.
 ```
-@ARTICLE{mujtaba2022ltc,
-  title={FRC-GIF: Frame Ranking-based Personalized Artistic Media Generation Method for Resource Constrained Devices}, 
+@ARTICLE{mujtabafrc,
+  author={Mujtaba, Ghulam and Khowaja, Sunder Ali and Jarwar, Muhammad Aslam and Choi, Jaehyuk and Ryu, Eun-Seok},
+  journal={IEEE Transactions on Big Data}, 
+  title={FRC-GIF: Frame Ranking-Based Personalized Artistic Media Generation Method for Resource Constrained Devices}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={1-14},
+  doi={10.1109/TBDATA.2023.3338012}} 
 ```
 
 
